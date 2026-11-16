@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAND BRAIN - Informática - Rosário Quizanga de Vermelho</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0f172a}
+#game{max-width:420px;min-height:100vh;margin:0 auto;background:linear-gradient(#0f172a,#4c1d95,#db2777);padding:12px}
+#topo{display:flex;justify-content:space-between;color:#fff;align-items:center}
+#logo{font-weight:900;font-size:22px;line-height:1}
+#logo span{color:#22c55e}
+.pill{background:#fff;border-radius:20px;padding:6px 10px;font-weight:900;font-size:13px}
+#barra{height:12px;background:rgba(255,255,255,.3);border-radius:10px;overflow:hidden;margin:10px 0}
+#prog{height:100%;width:0%;background:#22c55e}
+#card{background:#fff;border-radius:20px;padding:18px;min-height:430px}
+#badge{background:#7c3aed;color:#fff;padding:6px 14px;border-radius:20px;font-weight:900;font-size:12px}
+#badgeEspecial{background:#facc15;color:#000;padding:6px 10px;border-radius:20px;font-weight:900;font-size:11px;display:none}
+#tipo{color:#db2777;font-weight:900;font-size:11px;margin:8px 0}
+#pergunta{font-size:21px;font-weight:900;line-height:1.3;min-height:70px}
+#codigo{background:#0f172a;color:#22c55e;border-radius:10px;padding:10px;margin:8px 0;font-family:monospace;font-size:14px;text-align:left;white-space:pre-wrap;display:none}
+#desenho{font-size:40px;text-align:center;margin:10px 0}
+#ops{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.op{padding:14px 8px;border:3px solid #ddd;border-radius:14px;background:#f9fafb;font-weight:900;font-size:14px;text-align:center;cursor:pointer;word-break:break-word}
+.op.certo{background:#22c55e;color:#fff}
+.op.errado{background:#ef4444;color:#fff}
+#feedback{text-align:center;font-weight:900;margin:12px 0;min-height:24px}
+button{padding:13px 18px;border:none;border-radius:25px;background:#facc15;font-weight:900;font-size:14px;cursor:pointer;margin:3px}
+button.caro{background:#e879f9}
+#aviso{background:#fee2e2;border:2px solid #ef4444;color:#dc2626;border-radius:12px;padding:10px;margin-top:10px;font-weight:900;font-size:14px;text-align:center;display:none}
+#tela{position:fixed;inset:0;background:#0f172a;color:#fff;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;overflow-y:auto}
+#tela h1{font-size:42px}
+#tela h1 span{color:#22c55e}
+.box{background:#fff;color:#111;border-radius:14px;padding:12px;margin:12px 0;text-align:left;font-size:13px;line-height:1.5;width:100%;max-width:380px}
+</style>
+</head>
+<body>
+<div id="game">
+  <div id="topo"><div id="logo">CAND <span>BRAIN</span><br><small style="font-size:10px">200 NÍVEIS • INFORMÁTICA • MALANJE</small></div><div style="display:flex;gap:5px"><div class="pill" id="vidas">❤️❤️❤️</div><div class="pill" id="estrelas">⭐ 0</div></div></div>
+  <div id="barra"><div id="prog"></div></div>
+  <div style="display:flex;justify-content:space-between;color:#fff;font-weight:900;font-size:12px"><span id="nivelTxt">NÍVEL 1 / 200</span><span id="pontos">0 pts</span></div>
+
+  <div id="card">
+    <span id="badge">NÍVEL 1</span> <span id="badgeEspecial">⭐ NÍVEL ESPECIAL</span>
+    <div id="tipo">🧠 LÓGICA</div>
+    <div id="pergunta">A carregar...</div>
+    <div id="codigo"></div>
+    <div id="desenho"></div>
+    <div id="ops"></div>
+    <div id="feedback"></div>
+    <div id="aviso"></div>
+    <div style="text-align:center">
+      <button class="caro" onclick="pedirAjuda()">💡 AJUDA - 2 ⭐</button>
+      <button class="caro" onclick="saltarNivel()">⏭️ SALTAR - 2 ⭐</button>
+    </div>
+    <p style="text-align:center;font-size:11px;color:#666;margin-top:8px">Só os Níveis Especiais dão ⭐<br>Informática + Lógica + Matemática + Truques</p>
+  </div>
+  <p style="text-align:center;color:#fff;font-size:11px;margin-top:10px">© 2026 Cand Brain • Rosário Quizanga de Vermelho • Malanje, Angola 🇦🇴 • T.R.E.I</p>
+</div>
+
+<div id="tela">
+  <div style="font-size:60px">🧠💻</div>
+  <h1>CAND <span>BRAIN</span></h1>
+  <p>Teste de Cérebro + Informática - 200 Níveis - pt-PT</p>
+  <div class="box">
+    <b>💻 NOVO - INFORMÁTICA E PROGRAMAÇÃO:</b><br>
+    - <b>HTML / CSS / JS:</b> O que é &lt;h1&gt;? O que faz o CSS?<br>
+    - <b>Python:</b> print(), if, for, variáveis<br>
+    - <b>Binário:</b> 1010 = 10? 1111 = 15?<br>
+    - <b>Algoritmos:</b> O que faz este código?<br>
+    - <b>Lógica:</b> AND, OR, NOT - Verdadeiro ou Falso?<br>
+    - <b>Redes:</b> O que é IP? O que é Wi-Fi?<br><br>
+    <b>🧠 REGRAS:</b><br>
+    - Nível normal = +10 pts (sem estrela)<br>
+    - <b>Nível Especial = +10 pts + 1 ⭐</b><br>
+    - Especiais: 2, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200 e múltiplos de 10<br>
+    - <b>💡 AJUDA = 2 ⭐ | ⏭️ SALTAR = 2 ⭐</b><br>
+    - Se tiveres menos de 2 ⭐: <b style="color:#dc2626">⭐ Estrelas insuficientes!</b><br><br>
+    <b>👤 Criador:</b> Rosário Quizanga de Vermelho<br>
+    <b>📍 De:</b> Malanje, Angola 🇦🇴 | <b>🏫 Curso:</b> T.R.E.I
+  </div>
+  <button onclick="comecar()">🧠 COMEÇAR - NÍVEL <span id="btnNivel">1</span></button>
+</div>
+
+<script>
+var nivelAtual = 1, pontos = 0, estrelas = 0, vidas = 3, nivelObj = null;
+try { nivelAtual = parseInt(localStorage.getItem("candNivel")) || 1; } catch(e){ nivelAtual = 1; }
+try { pontos = parseInt(localStorage.getItem("candPontos")) || 0; } catch(e){ pontos = 0; }
+try { estrelas = parseInt(localStorage.getItem("candEstrelas")) || 0; } catch(e){ estrelas = 0; }
+
+function som(f){ try{ var c = new (window.AudioContext || window.webkitAudioContext)(); var o=c.createOscillator(); var g=c.createGain(); o.connect(g); g.connect(c.destination); o.frequency.value=f; o.type="square"; g.gain.value=0.07; o.start(); o.stop(c.currentTime+0.12); }catch(e){} }
+function eEspecial(n){ if(n===2||n===5) return true; if(n%10===0) return true; return false; }
+function mostrarAviso(msg){ var a=document.getElementById("aviso"); a.style.display="block"; a.innerText=msg; som(120); setTimeout(function(){a.style.display="none";},2800); }
+function salvar(){ try{ localStorage.setItem("candNivel",nivelAtual); localStorage.setItem("candPontos",pontos); localStorage.setItem("candEstrelas",estrelas); }catch(e){} }
+
+// ===== PERGUNTAS DE INFORMÁTICA + PROGRAMAÇÃO =====
+var INFO = [
+{q:"Em HTML, o que faz a etiqueta <h1> ?", cod:"<h1>Olá Mundo</h1>", d:"🌐", tipo:"💻 HTML", ops:["Título grande","Imagem","Botão","Link"], certa:0, dica:"h1 = heading 1, o título maior", exp:"<h1> é o título maior!"},
+{q:"Em CSS, o que faz esta linha?", cod:"color: red;", d:"🎨", tipo:"🎨 CSS", ops:["Muda a cor do texto para vermelho","Muda o tamanho","Muda a imagem","Apaga o texto"], certa:0, dica:"color = cor", exp:"color: red deixa o texto vermelho!"},
+{q:"Em JavaScript, o que faz este código?", cod:"let x = 5 + 5;", d:"💛", tipo:"💻 JAVASCRIPT", ops:["x fica 10","x fica 55","x fica 0","Dá erro"], certa:0, dica:"5+5", exp:"5+5=10, logo x=10"},
+{q:"Em Python, o que aparece no ecrã?", cod:"print('Olá Malanje')", d:"🐍", tipo:"🐍 PYTHON", ops:["Olá Malanje","Erro","Nada","123"], certa:0, dica:"print mostra o texto", exp:"print mostra 'Olá Malanje'!"},
+{q:"Qual é a extensão de um ficheiro Python?", cod:"", d:"🐍", tipo:"🐍 PYTHON", ops:[".py",".html",".jpg",".mp3"], certa:0, dica:"Py de Python", exp:".py é Python!"},
+{q:"O que faz o IF em programação?", cod:"if (idade >= 18) {\n  console.log('Maior');\n}", d:"🤔", tipo:"💻 LÓGICA", ops:["Se a condição for verdadeira, faz algo","Repete sempre","Apaga tudo","Cria imagem"], certa:0, dica:"IF = SE", exp:"IF = SE a condição for verdadeira!"},
+{q:"Quanto é 1010 em binário, em decimal?", cod:"1010 (binário) = ?", d:"0️⃣1️⃣", tipo:"💻 BINÁRIO", ops:["8","10","12","5"], certa:1, dica:"8+0+2+0 = 10", exp:"1010 = 8+2 = 10"},
+{q:"Quanto é 1111 em binário?", cod:"1111 (binário) = ?", d:"0️⃣1️⃣", tipo:"💻 BINÁRIO", ops:["15","11","7","14"], certa:0, dica:"8+4+2+1", exp:"1111 = 8+4+2+1 = 15"},
+{q:"Qual é o valor de: VERDADEIRO AND FALSO ?", cod:"true AND false = ?", d:"⚡", tipo:"💻 PORTAS LÓGICAS", ops:["Verdadeiro","Falso","Talvez","Nenhum"], certa:1, dica:"AND só é verdadeiro se os dois forem verdadeiros", exp:"AND precisa dos dois verdadeiros!"},
+{q:"Qual é o valor de: VERDADEIRO OR FALSO ?", cod:"true OR false = ?", d:"⚡", tipo:"💻 PORTAS LÓGICAS", ops:["Verdadeiro","Falso","Erro","Nenhum"], certa:0, dica:"OR basta um verdadeiro", exp:"OR = basta um verdadeiro!"},
+{q:"Qual é o valor de: NOT VERDADEIRO ?", cod:"NOT true = ?", d:"🔄", tipo:"💻 PORTAS LÓGICAS", ops:["Verdadeiro","Falso","0","1"], certa:1, dica:"NOT inverte!", exp:"NOT true = false!"},
+{q:"Em programação, o que é uma variável?", cod:"let nome = 'Rosário';", d:"📦", tipo:"💻 CONCEITOS", ops:["Uma caixa para guardar um valor","Uma imagem","Um erro","Um vírus"], certa:0, dica:"Guarda um valor, como nome", exp:"Variável é uma caixa que guarda um valor!"},
+{q:"O que faz o ciclo FOR?", cod:"for(i=0; i<3; i++){\n  print(i);\n}", d:"🔁", tipo:"💻 CICLOS", ops:["Repete 3 vezes","Apaga","Para tudo","Cria botão"], certa:0, dica:"FOR = repetir", exp:"FOR repete 3 vezes: 0,1,2"},
+{q:"Qual é a linguagem para fazer páginas web?", cod:"", d:"🌐", tipo:"💻 WEB", ops:["HTML","Python","C++","Java"], certa:0, dica:"É a base da web", exp:"HTML faz páginas web!"},
+{q:"O que significa CPU?", cod:"", d:"🖥️", tipo:"💻 HARDWARE", ops:["Processador do computador","Memória","Teclado","Ecrã"], certa:0, dica:"É o cérebro do PC", exp:"CPU é o processador, o cérebro do PC!"},
+{q:"O que significa Wi-Fi?", cod:"", d:"📶", tipo:"💻 REDES", ops:["Internet sem fios","Cabo","Telemóvel","Impressora"], certa:0, dica:"Sem fios!", exp:"Wi-Fi = internet sem fios!"},
+{q:"O que é um endereço IP?", cod:"Ex: 192.168.1.1", d:"🌐", tipo:"💻 REDES", ops:["Identificação de um aparelho na rede","Uma palavra-passe","Um vírus","Um jogo"], certa:0, dica:"É como o BI do aparelho na rede", exp:"IP identifica o aparelho na rede!"},
+{q:"Se x=10 e y=3, quanto é x % y ? (resto da divisão)", cod:"10 % 3 = ?", d:"🧮", tipo:"💻 PROGRAMAÇÃO", ops:["1","3","0","10"], certa:0, dica:"10 dividido por 3 dá 3 e sobra 1", exp:"10 % 3 = 1 (resto)!"},
+{q:"Qual destes é um erro de programação?", cod:"", d:"🐞", tipo:"💻 CONCEITOS", ops:["Bug","Print","Loop","Variável"], certa:0, dica:"Bug = bicho, erro!", exp:"Bug é um erro no código!"},
+{q:"Em HTML, qual é a etiqueta para uma imagem?", cod:"", d:"🖼️", tipo:"💻 HTML", ops:["<img>","<h1>","<p>","<div>"], certa:0, dica:"img = image", exp:"<img> é para imagem!"},
+{q:"Qual é o curso do Rosário Quizanga?", cod:"", d:"💻", tipo:"🏫 CRIADOR - ESPECIAL ⭐", ops:["Medicina","T.R.E.I","Direito","Cozinha"], certa:1, dica:"Redes e Informática", exp:"T.R.E.I - Técnico de Redes e Engenharia Informática!"},
+{q:"Se um algoritmo diz: 1. Pegar pão 2. Pôr queijo 3. Fechar. O que fizeste?", cod:"1. Pão\n2. Queijo\n3. Fechar", d:"🥪", tipo:"💻 ALGORITMO", ops:["Uma sandes","Um bolo","Um sumo","Nada"], certa:0, dica:"Pão + queijo", exp:"Fizeste uma sandes! Algoritmo é passo a passo!"},
+{q:"O que é um algoritmo?", cod:"", d:"📋", tipo:"💻 ALGORITMO", ops:["Passos para resolver um problema","Um vírus","Um jogo","Um teclado"], certa:0, dica:"É como uma receita!", exp:"Algoritmo = passos para resolver um problema!"},
+{q:"Em JavaScript, como se escreve um comentário?", cod:"// Isto é um comentário", d:"💬", tipo:"💻 JAVASCRIPT", ops:["// comentário","# comentário","-- comentário","** comentário"], certa:0, dica:"Duas barras", exp:"// é comentário em JavaScript!"},
+{q:"Qual é o sistema binário? Usa só...", cod:"", d:"0️⃣1️⃣", tipo:"💻 BINÁRIO", ops:["0 e 1","1 e 2","A e B","0 e 9"], certa:0, dica:"Só dois números", exp:"Binário só usa 0 e 1!"},
+];
+
+function criarNivel(n){
+  if(n===1) return {tipo:"🧠 MATEMÁTICA", q:"Quanto é 2 + 3 ?", cod:"", d:"🧮", ops:["4","5","6","7"], certa:1, dica:"Conta nos dedos: 2, 3, 4, 5", exp:"2+3=5"};
+  if(n===2) return {tipo:"👤 CRIADOR - ESPECIAL ⭐", q:"Quem é o criador do jogo Cand Brain?", cod:"", d:"👑❤️", ops:["Rosário Quizanga de Vermelho","Messi","Cand","Google"], certa:0, dica:"Está no ecrã inicial!", exp:"Rosário Quizanga de Vermelho!"};
+  if(n===3) return {tipo:"🤔 TRUQUE", q:"Quantos meses têm 28 dias?", cod:"", d:"📅", ops:["1","2","12","Nenhum"], certa:2, dica:"Todos os meses têm pelo menos 28 dias", exp:"Todos os 12 meses têm 28 dias!"};
+  if(n===5) return {tipo:"🇦🇴 MALANJE - ESPECIAL ⭐", q:"O criador do Cand Brain é de onde?", cod:"", d:"🇦🇴", ops:["Luanda","Malanje","Huambo","Benguela"], certa:1, dica:"É de Malanje!", exp:"Malanje, Angola!"};
+  if(n===10) return {tipo:"👤 CRIADOR - ESPECIAL ⭐", q:"Qual é o nome completo do criador?", cod:"", d:"✍️", ops:["Rosário Quizanga de Vermelho","Rosário Silva","Quizanga Messi","Rosário Cand"], certa:0, dica:"Rosário + Quizanga + de Vermelho", exp:"Rosário Quizanga de Vermelho!"};
+  if(n===20) return {tipo:"💻 INFORMÁTICA - ESPECIAL ⭐", q:"O que faz este código em Python?", cod:"print('Olá Malanje')", d:"🐍", ops:["Mostra Olá Malanje","Dá erro","Apaga tudo","Cria vírus"], certa:0, dica:"print mostra", exp:"print mostra 'Olá Malanje'!"};
+  if(n===50) return {tipo:"🏫 T.R.E.I - ESPECIAL ⭐", q:"Qual é o curso do Rosário?", cod:"", d:"💻", ops:["Medicina","T.R.E.I","Direito","Cozinha"], certa:1, dica:"Redes e Informática", exp:"T.R.E.I!"};
+  if(n===100) return {tipo:"🏆 ESPECIAL ⭐", q:"Quem criou o Cand Brain?", cod:"", d:"🏆", ops:["Rosário Quizanga de Vermelho","Outro","Google","Não sei"], certa:0, dica:"É sempre ele!", exp:"Rosário Quizanga de Vermelho!"};
+  if(n===200) return {tipo:"👑 FINAL ESPECIAL ⭐", q:"Para seres Mestre, quem é o criador?", cod:"", d:"👑🧠", ops:["Rosário Quizanga de Vermelho","Cand","Robô","Ninguém"], certa:0, dica:"O maior!", exp:"Rosário Quizanga de Vermelho!"};
+
+  // A partir do nível 4, mistura: Informática + Lógica + Matemática
+  var t = n % 5;
+  if(t===0) return INFO[n % INFO.length];
+  if(t===1){
+    var a=3+(n%12), b=2+(n%9), r=a+b;
+    return {tipo:"🧮 MATEMÁTICA", q:"Quanto é "+a+" + "+b+" ?", cod:"", d:"🧮", ops:[String(r-1),String(r),String(r+2),String(r+1)], certa:1, dica:"Soma devagar", exp:a+" + "+b+" = "+r};
+  }
+  if(t===2){
+    var s=1+(n%8);
+    return {tipo:"🔢 SEQUÊNCIA", q:"Qual é o próximo? "+s+", "+(s+3)+", "+(s+6)+", "+(s+9)+", ?", cod:"", d:"🔢", ops:[String(s+11),String(s+12),String(s+10),String(s+13)], certa:1, dica:"Está a somar +3", exp:"Soma +3: "+(s+12)};
+  }
+  if(t===3){
+    // Programação rápida: binário / lógica
+    if(n%2===0) return {tipo:"💻 BINÁRIO", q:"Quanto é 101 em binário?", cod:"101 (binário) = ?", d:"0️⃣1️⃣", ops:["5","3","7","10"], certa:0, dica:"4+0+1 = 5", exp:"101 = 4+1 = 5"};
+    return {tipo:"💻 LÓGICA", q:"Se x=5, x > 3 é...", cod:"x = 5\nx > 3 ?", d:"🤔", ops:["Verdadeiro","Falso","Erro","0"], certa:0, dica:"5 é maior que 3?", exp:"5 > 3 é Verdadeiro!"};
+  }
+  return {tipo:"👤 CRIADOR", q:"Quem é o criador do Cand Brain?", cod:"", d:"👑", ops:["Rosário Quizanga de Vermelho","Messi","Cand","Outro"], certa:0, dica:"De Vermelho!", exp:"Rosário Quizanga de Vermelho!"};
+}
+
+function atualizar(){
+  document.getElementById("nivelTxt").innerText="NÍVEL "+nivelAtual+" / 200";
+  document.getElementById("badge").innerText="NÍVEL "+nivelAtual;
+  document.getElementById("badgeEspecial").style.display=eEspecial(nivelAtual)?"inline-block":"none";
+  document.getElementById("prog").style.width=(nivelAtual/200*100)+"%";
+  document.getElementById("estrelas").innerText="⭐ "+estrelas;
+  document.getElementById("pontos").innerText=pontos+" pts";
+  document.getElementById("vidas").innerText="❤️".repeat(vidas);
+  document.getElementById("btnNivel").innerText=nivelAtual;
+}
+function carregarNivel(){
+  nivelObj=criarNivel(nivelAtual);
+  document.getElementById("tela").style.display="none";
+  document.getElementById("tipo").innerText=nivelObj.tipo;
+  document.getElementById("pergunta").innerText=nivelObj.q;
+  var codEl=document.getElementById("codigo");
+  if(nivelObj.cod && nivelObj.cod!==""){ codEl.style.display="block"; codEl.innerText=nivelObj.cod; } else { codEl.style.display="none"; }
+  document.getElementById("desenho").innerText=nivelObj.d;
+  document.getElementById("feedback").innerText="";
+  document.getElementById("aviso").style.display="none";
+  var opsEl=document.getElementById("ops"); opsEl.innerHTML="";
+  for(var i=0;i<nivelObj.ops.length;i++){
+    var d=document.createElement("div"); d.className="op"; d.innerText=nivelObj.ops[i];
+    (function(idx,el){ el.onclick=function(){ verificar(idx,el); }; })(i,d);
+    opsEl.appendChild(d);
+  }
+  atualizar();
+}
+function verificar(idx,el){
+  var especial=eEspecial(nivelAtual);
+  if(idx===nivelObj.certa){
+    el.className="op certo";
+    if(especial){ document.getElementById("feedback").innerText="✅ CERTO! NÍVEL ESPECIAL! "+nivelObj.exp+" +10 pts +1 ⭐"; estrelas=estrelas+1; }
+    else { document.getElementById("feedback").innerText="✅ CERTO! "+nivelObj.exp+" +10 pts (sem estrela - só especiais dão ⭐)"; }
+    document.getElementById("feedback").style.color="#22c55e"; som(900); pontos=pontos+10; salvar();
+    setTimeout(function(){
+      if(nivelAtual>=200){ document.getElementById("tela").style.display="flex"; document.getElementById("tela").innerHTML="<div style='font-size:60px'>👑💻</div><h1>MESTRE DO CÉREBRO!</h1><p>Completaste 200 níveis de Informática!</p><div class='box'><b>⭐ Estrelas: "+estrelas+" (só especiais)</b><br><b>🧠 Pontos: "+pontos+"</b><br><br>Criado por <b>Rosário Quizanga de Vermelho</b><br>Malanje, Angola 🇦🇴 • T.R.E.I</div><button onclick='location.reload()'>🔁 JOGAR DE NOVO</button>"; return; }
+      nivelAtual=nivelAtual+1; vidas=3; salvar(); carregarNivel();
+    },1400);
+  } else {
+    el.className="op errado"; vidas=vidas-1; som(120);
+    document.getElementById("feedback").innerText="❌ Errado! Tenta outra vez. Vidas: "+vidas;
+    document.getElementById("feedback").style.color="#ef4444"; atualizar();
+    if(vidas<=0){ setTimeout(function(){ alert("Perdeste as 3 vidas! Tens "+estrelas+" ⭐. Se quiseres ajuda, precisas de 2 ⭐."); vidas=3; carregarNivel(); },500); }
+  }
+}
+function pedirAjuda(){
+  if(estrelas<2){ mostrarAviso("⭐ ESTRELAS INSUFICIENTES! Precisas de 2 ⭐ para pedir ajuda. Tens "+estrelas+" ⭐. Passa níveis especiais para ganhar!"); return; }
+  estrelas=estrelas-2; salvar(); atualizar();
+  alert("💡 AJUDA - 2 ⭐ utilizadas! Ficaste com "+estrelas+" ⭐\n\nDica: "+nivelObj.dica);
+}
+function saltarNivel(){
+  if(estrelas<2){ mostrarAviso("⭐ ESTRELAS INSUFICIENTES! Precisas de 2 ⭐ para saltar. Tens "+estrelas+" ⭐. Passa níveis especiais para ganhar!"); return; }
+  if(nivelAtual>=200){ mostrarAviso("Já estás no último nível!"); return; }
+  estrelas=estrelas-2; nivelAtual=nivelAtual+1; vidas=3; salvar(); atualizar();
+  document.getElementById("feedback").innerText="⏭️ Saltaste! -2 ⭐. Ficaste com "+estrelas+" ⭐"; carregarNivel();
+}
+function comecar(){ carregarNivel(); }
+atualizar();
+</script>
+</body>
+</html>
